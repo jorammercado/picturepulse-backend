@@ -6,6 +6,13 @@ const { checkMovies,
         checkMovieName,
         checkMovieIndex } = require("../validations/checkMovies")
 
+const actorsController = require("./actorsController.js")
+movies.use("/:movie_id/actors", actorsController)
+
+const tasksController = require("./tasksController.js")
+movies.use("/:movie_id/tasks", tasksController)
+
+
 // index
 movies.get("/", checkMovies, checkMovieName, async  (req, res) => {
     const allMovies = await getAllMovies()

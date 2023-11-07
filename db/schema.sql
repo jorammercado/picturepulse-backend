@@ -27,6 +27,7 @@ CREATE TABLE actors (
     active DEFAULT false,
     age INT,
     movie_id INTEGER REFERENCES movies (id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE tasks (

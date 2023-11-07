@@ -9,8 +9,8 @@ app.get("/", (req, res) => {
   res.send("Welcome to Production Apprentice")
 })
 
-// const moviesController = require("./controllers/moviesController.js")
-// app.use("/moviess", moviesController)
+const moviesController = require("./controllers/moviesController.js")
+app.use("/movies", moviesController)
 // const actorsController = require("./controllers/actorsController.js")
 // app.use("/actors", tasksController)
 // const tasksController = require("./controllers/tasksController.js")

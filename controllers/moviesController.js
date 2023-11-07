@@ -14,7 +14,7 @@ movies.use("/:movie_id/tasks", tasksController)
 
 
 // index
-movies.get("/", checkMovies, checkMovieName, async  (req, res) => {
+movies.get("/", checkMovies, async  (req, res) => {
     const allMovies = await getAllMovies()
     if(req.query.order){
         allMovies.sort((a,b) => {

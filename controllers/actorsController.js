@@ -4,12 +4,12 @@ const { getMovie } = require("../queries/movies")
 
 const { getAllActors,
         getOneActor
-} = require("../queries/actors")
+      } = require("../queries/actors")
 
 const { checkActors,
         checkActorName,
         checkActorIndex
-} = require("../validations/checkActors.js")
+      } = require("../validations/checkActors.js")
 
 const { checkMovieIndex 
 } = require("../validations/checkMovies.js")

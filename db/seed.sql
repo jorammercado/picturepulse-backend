@@ -7,4 +7,12 @@ INSERT INTO movies(movie_name, poster_link, studio, director, staring, overview,
 (),
 ();
 
-INSERT INTO actors()
+INSERT INTO actors(actor_name, actor_img, active, age, movie_id) VALUES
+(),
+(),
+();
+
+INSERT INTO tasks(task_name, description, department, cost, completed, movie_id) VALUES
+(),
+(),
+();

@@ -36,6 +36,6 @@ CREATE TABLE tasks (
     department TEXT,
     cost INT DEFAULT 0,
     completed BOOLEAN DEFAULT false,
-     movie_id INTEGER REFERENCES movies (id)
-     ON DELETE CASCADE
+    movie_id INTEGER REFERENCES movies (id)
+    ON DELETE CASCADE
 );

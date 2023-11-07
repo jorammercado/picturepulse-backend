@@ -24,7 +24,7 @@ CREATE TABLE actors (
     id SERIAL PRIMARY KEY,
     actor_name TEXT NOT NULL,
     actor_img TEXT,
-    active DEFAULT false,
+    active BOOLEAN DEFAULT false,
     age INT,
     movie_id INTEGER REFERENCES movies (id)
     ON DELETE CASCADE

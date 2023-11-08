@@ -44,7 +44,20 @@ const deleteActor = async (id) => {
 }
 
 //update
+const updateActor = async (id) => {
+    try {
+        const updatedActor = await db.one("UPDATE actors SET actor_name=$1, actor_img=$2, active=$3, age=$4, movie_id=$5 WHERE id=$6 RETURNING *",
+        [actor_name, actor_img, active, age, movie_id, id]
+    );
+    } catch (error) {
+        return error
+    }
+}
 
-
-module.exports = { getAllActors,
-                   getOneActor  }
+module.exports = {
+    getAllActors,
+    getOneActor,
+    createActor,
+    deleteActor,
+    updateActor
+  }

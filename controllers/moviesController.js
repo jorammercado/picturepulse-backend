@@ -13,7 +13,6 @@ const tasksController = require("./tasksController.js")
 movies.use("/:movie_id/tasks", tasksController)
 
 
-// index
 movies.get("/", checkMovies, async  (req, res) => {
     const allMovies = await getAllMovies()
     if(req.query.order){
@@ -38,20 +37,42 @@ movies.get("/", checkMovies, async  (req, res) => {
         res.status(200).json(allMovies)
 })
 
-// show
 movies.get("/:id", checkMovieIndex, async (req, res) => {
     const { id } = req.params
     const movie = await getOneMovie(id)
     res.json(movie)
 })
 
-// new
-movies.get("/", async (req, res) => {
-     
+movies.post("/", async (req, res) => {
+     try {
+        const movie = await createMovie(req.body);
+        res.status(200).json(movie);
+     } catch (error) {
+        res.status(400).json({ error: "New movie not created." });
+     }
+});
+
+movies.delete("/:id", async (req, res) => {
+    try {
+        const movie = await deletedMovie(id);
+        if (movie) {
+            res.status(200).json({success: true, payload: {data: deletedMovie}})
+        } else {
+            res.status(404).json({ error: "Movie not found."})
+        }
+    } catch (error) {
+        res.send(err)
+    }
 })
-// delete
 
-// update
-
+movies.put("/:id", async (req, res) => {
+    const { id } = req.params;
+   const updateMovie = await updatedMovie(id, req.body);
+   if (updatedMovie.id) {
+    res.status(200).json(updateMovie);
+   }  else {
+    res.status(404).json({ error: "Movie not found."})
+   }
+})
 
 module.exports = movies

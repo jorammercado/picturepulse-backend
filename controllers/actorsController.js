@@ -80,16 +80,26 @@ actors.get("/:id", checkMovieIndex, checkActorIndex, async (req, res) => {
 })
 
 // new, /movies/#/actors
-actor.post("/", checkMovieIndex, async (req, res) => {
+actors.post("/", checkMovieIndex, async (req, res) => {
     const { movie_id } = req.params;
     const actorData = req.body;
     actorData.move_id = movie_id;
     const newActor = await createActor(actorData);
     res.status(200).json(newActor);
 })
+
 // delete /movies/#/actors/:id
+actors.delete("/:id", checkMovieIndex, checkActorIndex, async (req, res) => {
+    const { id } = req.params;
+    const deletedActor = await deleteActor(id);
+    if (deletedActor) {
+        res.status(200).json(deletedActor);
+    } else {
+        res.status(404).json({ error: "Actor not found" });
+    }
+} );
 
 // update /movies/#/actors/:id
-
+actors.put
 
 module.exports = actors

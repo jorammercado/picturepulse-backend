@@ -3,7 +3,10 @@ const actors = express.Router({ mergeParams: true })
 const { getMovie } = require("../queries/movies")
 
 const { getAllActors,
-        getOneActor
+        getOneActor,
+        createActor,
+        deleteActor,
+        updateActor
       } = require("../queries/actors")
 
 const { checkActors,
@@ -15,7 +18,6 @@ const { checkMovieIndex
 } = require("../validations/checkMovies.js")
 
 
-// index, /movies/#/actors
 actors.get("/", checkActors, checkMovieIndex, async (req, res) => {
     const { movie_id } = req.params
     const movie = await getMovie(movie_id)
@@ -65,33 +67,27 @@ actors.get("/", checkActors, checkMovieIndex, async (req, res) => {
             res.redirect('/active key should be true or false')
     }
     else{
-        /*******************************/
-        /***** main functionality ******/
         res.json({ ...movie, allActors })
-        /*******************************/
     }
 })
 
-// show, /movies/#/actors/:id
 actors.get("/:id", checkMovieIndex, checkActorIndex, async (req, res) => {
     const { movie_id, id } = req.params
     const actor = await getOneActor(id)
     res.json(actor)
 })
 
-// new, /movies/#/actors
 actors.post("/", checkMovieIndex, async (req, res) => {
     const { movie_id } = req.params;
     const actorData = req.body;
-    actorData.move_id = movie_id;
+    actorData.movie_id = movie_id;
     const newActor = await createActor(actorData);
     res.status(200).json(newActor);
 })
 
-// delete /movies/#/actors/:id
-actors.delete("/:id", checkMovieIndex, checkActorIndex, async (req, res) => {
-    const { id } = req.params;
-    const deletedActor = await deleteActor(id);
+actors.delete("/:actor_id", checkMovieIndex, checkActorIndex, async (req, res) => {
+    const { actor_id } = req.params;
+    const deletedActor = await deleteActor(actor_id);
     if (deletedActor) {
         res.status(200).json(deletedActor);
     } else {
@@ -99,11 +95,10 @@ actors.delete("/:id", checkMovieIndex, checkActorIndex, async (req, res) => {
     }
 } );
 
-// update /movies/#/actors/:id
 actors.put("/:id", checkMovieIndex, checkActorIndex, async (req, res) => {
     const { id } = req.params;
     const updatedActorData = req.body;
-    const updatedActor = await updatedActorData(id, updatedActorData);
+    const updatedActor = await updateActor(id, updatedActorData);
         if (updatedActor) {
             res.status(200).json(updatedActor);
         } else {

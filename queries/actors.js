@@ -1,6 +1,5 @@
 const db = require("../db/dbConfig.js")
 
-// index
 const getAllActors = async (movie_id) => {
     try{
         const allActors = await db.any("SELECT * FROM actors WHERE movie_id=$1",
@@ -12,7 +11,6 @@ const getAllActors = async (movie_id) => {
     }
 }
 
-// show
 const getOneActor = async (id) => {
     try{
         const oneActor = await db.any("SELECT * FROM actors WHERE id=$1",id)
@@ -23,7 +21,6 @@ const getOneActor = async (id) => {
     }
 }
 
-//create
 const createActor = async (actor) => {
     try {
         const newActor = await db.one("INSERT INTO actors(actor_name, actor_img, active, age, movie_id) VALUES(${actor_name}, ${actor_img}, ${active}, ${age}, ${movie_id}) RETURNING *",
@@ -33,7 +30,6 @@ const createActor = async (actor) => {
     }
 }
 
-//delete
 const deleteActor = async (id) => {
     try {
         const deletedActor = await db.one("DELETE FROM actors WHERE id=$1 RETURNING *", id);
@@ -43,7 +39,6 @@ const deleteActor = async (id) => {
     }
 }
 
-//update
 const updateActor = async (id) => {
     try {
         const updatedActor = await db.one("UPDATE actors SET actor_name=$1, actor_img=$2, active=$3, age=$4, movie_id=$5 WHERE id=$6 RETURNING *",

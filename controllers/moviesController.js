@@ -1,7 +1,11 @@
 const express = require("express")
 const movies = express.Router()
 const { getAllMovies, 
-        getOneMovie } = require("../queries/movies")
+        getOneMovie,
+        createMovie,
+        deleteMovie,
+        updateMovie
+    } = require("../queries/movies")
 const { checkMovies,
         checkMovieName,
         checkMovieIndex } = require("../validations/checkMovies")
@@ -54,8 +58,9 @@ movies.post("/", async (req, res) => {
 
 movies.delete("/:id", async (req, res) => {
     try {
-        const movie = await deletedMovie(id);
-        if (movie) {
+        const { id } = req.params;
+        const deletedMovie = await deleteMovie(id);
+        if (deletedMovie) {
             res.status(200).json({success: true, payload: {data: deletedMovie}})
         } else {
             res.status(404).json({ error: "Movie not found."})
@@ -67,9 +72,9 @@ movies.delete("/:id", async (req, res) => {
 
 movies.put("/:id", async (req, res) => {
     const { id } = req.params;
-   const updateMovie = await updatedMovie(id, req.body);
+   const updatedMovie = await updateMovie(id, req.body);
    if (updatedMovie.id) {
-    res.status(200).json(updateMovie);
+    res.status(200).json(updatedMovie);
    }  else {
     res.status(404).json({ error: "Movie not found."})
    }

@@ -23,11 +23,28 @@ const getOneActor = async (id) => {
     }
 }
 
-//delete
-
 //create
+const createActor = async (actor) => {
+    try {
+        const newActor = await db.one("INSERT INTO actors(actor_name, actor_img, active, age, movie_id) VALUES(${actor_name}, ${actor_img}, ${active}, ${age}, ${movie_id}) RETURNING *",
+        actor);
+    } catch (error) {
+        return error
+    }
+}
+
+//delete
+const deleteActor = async (id) => {
+    try {
+        const deletedActor = await db.one("DELETE FROM actors WHERE id=$1 RETURNING *", id);
+        return deletedActor;
+    } catch (error) {
+        return error
+    }
+}
 
 //update
+
 
 module.exports = { getAllActors,
                    getOneActor  }

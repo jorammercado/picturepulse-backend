@@ -100,6 +100,15 @@ actors.delete("/:id", checkMovieIndex, checkActorIndex, async (req, res) => {
 } );
 
 // update /movies/#/actors/:id
-actors.put
+actors.put("/:id", checkMovieIndex, checkActorIndex, async (req, res) => {
+    const { id } = req.params;
+    const updatedActorData = req.body;
+    const updatedActor = await updatedActorData(id, updatedActorData);
+        if (updatedActor) {
+            res.status(200).json(updatedActor);
+        } else {
+            res.status(404).json({ error: " Actor not found"});
+        }
+});
 
 module.exports = actors

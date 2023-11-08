@@ -23,11 +23,48 @@ const getOneTask = async (id) => {
     }
 }
 
-//delete
-
 //create
+const createTask = async (task) => {
+    try {
+        const createdTask = await db.one("INSERT INTO tasks (task_name, description, department, cost, completed, movie_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
+        [task_name, description, department, cost, completed, movie_id]
+        )
+    } catch (error) {
+        return error
+    }
+}
+
+//delete
+const deleteTask = async (id) => {
+    try {
+        const deletedTask = await db.one(
+            "DELETE FROM tasks WHERE id=$1 RETURNING *",
+            [id]
+        );
+        return deletedTask;
+    } catch (error) {
+        return error;
+    }
+};
 
 //update
+const updateTask = async (id, task) => {
+    try {
+        const { task_name, description, department, cost, completed, movie_id } = task;
+        const updatedTask = await db.one(
+            "UPDATE tasks SET task_name=$1, description=$2, department=$3, cost=$4, completed=$5, movie_id=$6 WHERE id=$7 RETURNING *",
+            [task_name, description, department, cost, completed, movie_id, id]
+        );
+        return updatedTask;
+    } catch (error) {
+        return error;
+    }
+};
 
-module.exports = { getAllTasks,
-                   getOneTask  }
+module.exports = {
+    getAllTasks,
+    getOneTask,
+    createTask,
+    deleteTask,
+    updateTask
+}

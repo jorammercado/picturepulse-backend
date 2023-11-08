@@ -45,9 +45,11 @@ movies.get("/:id", checkMovieIndex, async (req, res) => {
     res.json(movie)
 })
 
-// delete
-
 // new
+movies.get("/", async (req, res) => {
+     
+})
+// delete
 
 // update
 

@@ -80,7 +80,13 @@ actors.get("/:id", checkMovieIndex, checkActorIndex, async (req, res) => {
 })
 
 // new, /movies/#/actors
-
+actor.post("/", checkMovieIndex, async (req, res) => {
+    const { movie_id } = req.params;
+    const actorData = req.body;
+    actorData.move_id = movie_id;
+    const newActor = await createActor(actorData);
+    res.status(200).json(newActor);
+})
 // delete /movies/#/actors/:id
 
 // update /movies/#/actors/:id

@@ -17,7 +17,6 @@ const { checkTasks,
 
 const { checkMovieIndex 
 } = require("../validations/checkMovies.js");
-const { deleteTask } = require("../queries/tasks");
 
 tasks.get("/", checkTasks, checkMovieIndex, async (req, res) => {
     const { movie_id } = req.params

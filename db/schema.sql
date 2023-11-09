@@ -9,7 +9,7 @@ CREATE TABLE movies (
  poster_link TEXT,
  studio VARCHAR(20),
  director VARCHAR(20),
- staring VARCHAR(20),
+ starring VARCHAR(20),
  overview TEXT,
  runtime INT DEFAULT 0,
  release_year INT,

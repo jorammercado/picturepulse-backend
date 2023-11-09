@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dbinit": "psql -U postgres -f db/schema.sql",
-    "dbseed": "psql -U postgres -f db/seed.sql"
+    "dbseed": "psql -U postgres -f db/seed.sql",
+    "db_schema": "psql -U postgres -f db/schema.sql",
+    "db_seed": "psql -U postgres -f db/seed.sql"
   },
   "keywords": [],
   "author": "",

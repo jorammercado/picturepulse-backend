@@ -29,7 +29,8 @@ const checkTaskDescription = (req, res, next) => {
 }
 
 const checkTaskIndex = async (req, res, next) =>{
-    const allTasks = await getAllTasks()
+    const {movie_id} = req.params
+    const allTasks = await getAllTasks(movie_id)
     const {id} = req.params
     const ids = allTasks.map(e => e.id)
     if(ids.includes(Number(id)))

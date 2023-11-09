@@ -1,6 +1,6 @@
 const express = require("express")
 const actors = express.Router({ mergeParams: true })
-const { getMovie } = require("../queries/movies")
+const { getOneMovie } = require("../queries/movies")
 
 const { getAllActors,
         getOneActor,
@@ -18,9 +18,9 @@ const { checkMovieIndex
 } = require("../validations/checkMovies.js")
 
 
-actors.get("/", checkActors, checkMovieIndex, async (req, res) => {
+actors.get("/",  async (req, res) => {
     const { movie_id } = req.params
-    const movie = await getMovie(movie_id)
+    const movie = await getOneMovie(movie_id)
     let allActors = await getAllActors(movie_id)
     if (req.query.order) {
         allActors.sort((a, b) => {
@@ -71,7 +71,7 @@ actors.get("/", checkActors, checkMovieIndex, async (req, res) => {
     }
 })
 
-actors.get("/:id", checkMovieIndex, checkActorIndex, async (req, res) => {
+actors.get("/:id", async (req, res) => {
     const { movie_id, id } = req.params
     const actor = await getOneActor(id)
     res.json(actor)

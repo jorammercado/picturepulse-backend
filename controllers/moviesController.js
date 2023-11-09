@@ -47,7 +47,7 @@ movies.get("/:id", checkMovieIndex, async (req, res) => {
     res.json(movie)
 })
 
-movies.post("/", async (req, res) => {
+movies.post("/", checkMovieName ,async (req, res) => {
      try {
         const movie = await createMovie(req.body);
         res.status(200).json(movie);
@@ -56,7 +56,7 @@ movies.post("/", async (req, res) => {
      }
 });
 
-movies.delete("/:id", async (req, res) => {
+movies.delete("/:id", checkMovieIndex, async (req, res) => {
     try {
         const { id } = req.params;
         const deletedMovie = await deleteMovie(id);
@@ -70,7 +70,7 @@ movies.delete("/:id", async (req, res) => {
     }
 })
 
-movies.put("/:id", async (req, res) => {
+movies.put("/:id", checkMovieName, checkMovieIndex, async (req, res) => {
     const { id } = req.params;
    const updatedMovie = await updateMovie(id, req.body);
    if (updatedMovie.id) {

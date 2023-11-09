@@ -5,11 +5,11 @@ CREATE DATABASE movies_dev;
 
 CREATE TABLE movies (
  id SERIAL PRIMARY KEY,
- movie_name VARCHAR(20) NOT NULL,
+ movie_name VARCHAR(35) NOT NULL,
  poster_link TEXT,
- studio VARCHAR(20),
- director VARCHAR(20),
- staring VARCHAR(20),
+ studio VARCHAR(35),
+ director VARCHAR(35),
+ staring VARCHAR(35),
  overview TEXT,
  runtime INT DEFAULT 0,
  release_year INT,
@@ -32,7 +32,7 @@ CREATE TABLE actors (
 
 CREATE TABLE tasks (
     id SERIAL PRIMARY KEY,
-    task_name VARCHAR(20) NOT NULL,
+    task_name VARCHAR(35) NOT NULL,
     description TEXT NOT NULL,
     department TEXT,
     cost INT DEFAULT 0,

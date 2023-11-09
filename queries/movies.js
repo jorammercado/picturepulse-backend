@@ -51,6 +51,7 @@ const updateMovie = async (id, movie) => {
       "UPDATE movies SET movie_name=${movie_name}, poster_link=${poster_link}, studio=${studio}, director=${director}, staring=${staring}, overview=${overview}, runtime=${runtime}, release_year=${release_year}, budget=${budget}, current_balance=${current_balance}, schedule=${schedule}, genre=${genre}, in_production=${in_production} WHERE id=${id} RETURNING *",
       { id, ...movie }
     );
+    return updatedMovie;
   } catch (error) {
     return error;
   }

@@ -1,7 +1,8 @@
 const { getAllActors } = require("../queries/actors")
 
 const checkActors = async (req, res, next) => {
-    const allActors = await getAllActors()
+    const { movie_id } = req.params
+    const allActors = await getAllActors(movie_id)
     if(allActors[0]){
         return next()
     }

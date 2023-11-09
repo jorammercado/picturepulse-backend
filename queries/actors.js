@@ -25,6 +25,7 @@ const createActor = async (actor) => {
     try {
         const newActor = await db.one("INSERT INTO actors(actor_name, actor_img, active, age, movie_id) VALUES(${actor_name}, ${actor_img}, ${active}, ${age}, ${movie_id}) RETURNING *",
         actor);
+        return newActor;
     } catch (error) {
         return error
     }
@@ -39,11 +40,12 @@ const deleteActor = async (id) => {
     }
 }
 
-const updateActor = async (id) => {
+const updateActor = async (id, actor) => {
     try {
         const updatedActor = await db.one("UPDATE actors SET actor_name=$1, actor_img=$2, active=$3, age=$4, movie_id=$5 WHERE id=$6 RETURNING *",
-        [actor_name, actor_img, active, age, movie_id, id]
+        [actor.actor_name, actor.actor_img, actor.active, actor.age, actor.movie_id, id]
     );
+    return updatedActor;   
     } catch (error) {
         return error
     }

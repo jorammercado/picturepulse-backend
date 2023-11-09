@@ -11,14 +11,14 @@ const { getAllTasks,
 
 const { checkTasks,
         checkTaskName,
+        checkCompletedBoolean,
         checkTaskDescription,
-        checkTaskIndex
+        checkTaskIndex,
+        checkMovieIndex
       } = require("../validations/checkTasks.js")
 
-const { checkMovieIndex 
-} = require("../validations/checkMovies.js");
 
-tasks.get("/", async (req, res) => {
+tasks.get("/", checkTasks, checkMovieIndex, async (req, res) => {
     const { movie_id } = req.params
     const movie = await getOneMovie(movie_id)
     let allTasks = await getAllTasks(movie_id)
@@ -71,22 +71,28 @@ tasks.get("/", async (req, res) => {
     }
 })
 
-tasks.get("/:id", async (req, res) => {
+tasks.get("/:id", checkMovieIndex, checkTaskIndex, async (req, res) => {
     const { movie_id, id } = req.params
     const task = await getOneTask(id)
     res.json(task)
 })
 
-tasks.post("/", async (req, res) => {
+tasks.post("/", checkMovieIndex, 
+                checkTaskName,
+                checkTaskDescription,
+                checkCompletedBoolean, async (req, res) => {
     try {
-        const createdTask = await createTask(req.body);
+        const { movie_id } = req.params;
+        const taskData = req.body;
+        taskData.movie_id = movie_id;
+        const createdTask = await createTask(taskData);
         res.status(200).json(createdTask);
     } catch (error) {
         res.status(400).json({ error: "Task not created.." });
     }
 });
 
-tasks.delete("/:id", async (req, res) => {
+tasks.delete("/:id", checkMovieIndex, checkTaskIndex, async (req, res) => {
     try {
         const { id } = req.params;
         const deletedTask = await deleteTask(id);
@@ -100,9 +106,15 @@ tasks.delete("/:id", async (req, res) => {
     }
 });
 
-tasks.put("/:id", async (req, res) => {
-    const { id } = req.params;
-    const updatedTask = await updateTask(id, req.body);
+tasks.put("/:id", checkMovieIndex, 
+                  checkTaskName,
+                  checkTaskDescription,
+                  checkTaskIndex,
+                  checkCompletedBoolean, async (req, res) => {
+    const { id, movie_id } = req.params;
+    const updatedTaskData = req.body;
+    updatedTaskData.movie_id = movie_id;
+    const updatedTask = await updateTask(id, updatedTaskData);
     if (updatedTask.id) {
         res.status(200).json(updatedTask);
     } else {

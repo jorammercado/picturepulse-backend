@@ -27,8 +27,9 @@ const getOneTask = async (id) => {
 const createTask = async (task) => {
     try {
         const createdTask = await db.one("INSERT INTO tasks (task_name, description, department, cost, completed, movie_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
-        [task_name, description, department, cost, completed, movie_id]
+        [task.task_name, task.description, task.department, task.cost, task.completed, task.movie_id]
         )
+        return createdTask
     } catch (error) {
         return error
     }

@@ -15,7 +15,7 @@ const checkMovieName = (req, res, next) => {
         return next()
     }
     else{
-        res.status(400).json({error: "artist_name is required"})
+        res.status(400).json({error: "movie_name is required"})
     }
 }
 
@@ -29,4 +29,18 @@ const checkMovieIndex = async (req, res, next) =>{
     res.status(404).redirect("/error - invalid movie id")
 }
 
-module.exports = { checkMovies, checkMovieName, checkMovieIndex }
+const checkInProductionBoolean = (req, res, next) => {
+    const { in_production } = req.body
+    if (in_production == "true" ||
+        in_production == "false" ||
+        in_production == undefined ||
+        typeof in_production == "boolean")
+        return next()
+    else
+        res.status(400).json({ error: "in_production must be a boolean value" })
+}
+
+module.exports = { checkMovies, 
+                   checkMovieName, 
+                   checkMovieIndex, 
+                   checkInProductionBoolean }

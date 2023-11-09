@@ -8,7 +8,8 @@ const { getAllMovies,
     } = require("../queries/movies")
 const { checkMovies,
         checkMovieName,
-        checkMovieIndex } = require("../validations/checkMovies")
+        checkMovieIndex,
+        checkInProductionBoolean } = require("../validations/checkMovies")
 
 const actorsController = require("./actorsController.js")
 movies.use("/:movie_id/actors", actorsController)
@@ -47,7 +48,8 @@ movies.get("/:id", checkMovieIndex, async (req, res) => {
     res.json(movie)
 })
 
-movies.post("/", checkMovieName ,async (req, res) => {
+movies.post("/", checkMovieName,
+                 checkInProductionBoolean ,async (req, res) => {
      try {
         const movie = await createMovie(req.body);
         res.status(200).json(movie);
@@ -70,7 +72,9 @@ movies.delete("/:id", checkMovieIndex, async (req, res) => {
     }
 })
 
-movies.put("/:id", checkMovieName, checkMovieIndex, async (req, res) => {
+movies.put("/:id", checkMovieName, 
+                   checkMovieIndex,
+                   checkInProductionBoolean, async (req, res) => {
     const { id } = req.params;
    const updatedMovie = await updateMovie(id, req.body);
    if (updatedMovie.id) {

@@ -81,6 +81,9 @@ actors.post("/", checkMovieIndex,
                  checkActiveBoolean, async (req, res) => {
     const { movie_id } = req.params;
     const actorData = req.body;
+    actorData.actor_img = !actorData.actor_img?"":actorData.actor_img;
+    actorData.active = !actorData.active?false:actorData.active;
+    actorData.age = !actorData.age?0:actorData.age;
     actorData.movie_id = movie_id;
     const newActor = await createActor(actorData);
     res.status(200).json(newActor);
@@ -102,6 +105,9 @@ actors.put("/:id", checkMovieIndex,
                    checkActiveBoolean, async (req, res) => {
     const { id, movie_id } = req.params;
     const updatedActorData = req.body;
+    updatedActorData.actor_img = !updatedActorData.actor_img?"":updatedActorData.actor_img;
+    updatedActorData.active = !updatedActorData.active?false:updatedActorData.active;
+    updatedActorData.age = !updatedActorData.age?0:updatedActorData.age;
     updatedActorData.movie_id = movie_id;
     const updatedActor = await updateActor(id, updatedActorData);
         if (updatedActor) {

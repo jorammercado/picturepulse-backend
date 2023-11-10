@@ -33,7 +33,7 @@ CREATE TABLE actors (
 CREATE TABLE tasks (
     id SERIAL PRIMARY KEY,
     task_name VARCHAR(35) NOT NULL,
-    description TEXT NOT NULL,
+    description TEXT,
     department TEXT,
     cost INT DEFAULT 0,
     completed BOOLEAN DEFAULT false,

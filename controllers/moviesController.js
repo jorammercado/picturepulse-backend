@@ -51,8 +51,21 @@ movies.get("/:id", checkMovieIndex, async (req, res) => {
 movies.post("/", checkMovieName,
                  checkInProductionBoolean ,async (req, res) => {
      try {
-        const movie = await createMovie(req.body);
-        res.status(200).json(movie);
+        const movie = req.body
+        movie.poster_link = !movie.poster_link?"":movie.poster_link
+        movie.studio = !movie.studio?"":movie.studio
+        movie.director= !movie.director?"":movie.director
+        movie.staring = !movie.staring?"":movie.staring
+        movie.overview = !movie.overview?"":movie.overview
+        movie.runtime = !movie.runtime?0:movie.runtime
+        movie.release_year = !movie.release_year?1990:movie.release_year
+        movie.budget = !movie.budget?0:movie.budget
+        movie.current_balance = !movie.current_balance?0:movie.current_balance
+        movie.schedule = !movie.schedule?"":movie.schedule
+        movie.genre = !movie.genre?"":movie.genre
+        movie.in_production = !movie.in_production?false:movie.in_production
+        const movieAdded = await createMovie(movie);
+        res.status(200).json(movieAdded);
      } catch (error) {
         res.status(400).json({ error: "New movie not created." });
      }
@@ -75,9 +88,23 @@ movies.delete("/:id", checkMovieIndex, async (req, res) => {
 movies.put("/:id", checkMovieName, 
                    checkMovieIndex,
                    checkInProductionBoolean, async (req, res) => {
-    const { id } = req.params;
-   const updatedMovie = await updateMovie(id, req.body);
-   if (updatedMovie.id) {
+                    
+    const { id } = req.params
+    const movie = req.body
+    movie.poster_link = !movie.poster_link?"":movie.poster_link
+    movie.studio = !movie.studio?"":movie.studio
+    movie.director= !movie.director?"":movie.director
+    movie.staring = !movie.staring?"":movie.staring
+    movie.overview = !movie.overview?"":movie.overview
+    movie.runtime = !movie.runtime?0:movie.runtime
+    movie.release_year = !movie.release_year?1990:movie.release_year
+    movie.budget = !movie.budget?0:movie.budget
+    movie.current_balance = !movie.current_balance?0:movie.current_balance
+    movie.schedule = !movie.schedule?"":movie.schedule
+    movie.genre = !movie.genre?"":movie.genre
+    movie.in_production = !movie.in_production?false:movie.in_production
+    const updatedMovie = await updateMovie(id, movie);
+    if (updatedMovie.id) {
     res.status(200).json(updatedMovie);
    }  else {
     res.status(404).json({ error: "Movie not found."})

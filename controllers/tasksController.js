@@ -79,11 +79,14 @@ tasks.get("/:id", checkMovieIndex, checkTaskIndex, async (req, res) => {
 
 tasks.post("/", checkMovieIndex, 
                 checkTaskName,
-                checkTaskDescription,
                 checkCompletedBoolean, async (req, res) => {
     try {
         const { movie_id } = req.params;
         const taskData = req.body;
+        taskData.description = !taskData.description?"":taskData.description;
+        taskData.department = !taskData.department?"":taskData.department;
+        taskData.cost = !taskData.cost?0:taskData.cost;
+        taskData.completed = !taskData.completed?false:taskData.completed;
         taskData.movie_id = movie_id;
         const createdTask = await createTask(taskData);
         res.status(200).json(createdTask);
@@ -108,11 +111,14 @@ tasks.delete("/:id", checkMovieIndex, checkTaskIndex, async (req, res) => {
 
 tasks.put("/:id", checkMovieIndex, 
                   checkTaskName,
-                  checkTaskDescription,
                   checkTaskIndex,
                   checkCompletedBoolean, async (req, res) => {
     const { id, movie_id } = req.params;
     const updatedTaskData = req.body;
+    updatedTaskData.description = !updatedTaskData.description?"":updatedTaskData.description;
+    updatedTaskData.department = !updatedTaskData.department?"":updatedTaskData.department;
+    updatedTaskData.cost = !updatedTaskData.cost?0:updatedTaskData.cost;
+    updatedTaskData.completed = !updatedTaskData.completed?false:updatedTaskData.completed;
     updatedTaskData.movie_id = movie_id;
     const updatedTask = await updateTask(id, updatedTaskData);
     if (updatedTask.id) {
